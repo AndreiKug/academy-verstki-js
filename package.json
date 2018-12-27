@@ -1,0 +1,19 @@
+{
+  "name": "diplom-academy-verstki",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.26.3",
+    "gulp": "^3.9.1",
+    "gulp-concat-css": "^3.1.0",
+    "gulp-sass": "^4.0.2",
+    "node-sass": "^4.10.0"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Andrey",
+  "license": "ISC"
+}
