@@ -27,31 +27,26 @@ let man = document.getElementById('male');
 let woman = document.getElementById('female');
 let personSkin = document.getElementById('person-skin');
 
-/*man.addEventListener('click', function () {
-    console.log('М');
-    personSkin.style.background = "url('img/skin/skin-1.png') center no-repeat";
-    personSkin.style.backgroundSize = 'cover';
-});
-
-woman.addEventListener('click', function () {
-    console.log('Ж');
-    personSkin.style.background = "url('img/skin/skin-4.png') center no-repeat";
-    personSkin.style.backgroundSize = 'cover';
-});*/
-
 
 //SLIDER
 //Написать через this
-// Проверка на id male/female.checked + classList.contains(hair-man/hair-woman)
 // Для this переименовать классы на slider-man/slider-woman?
 let sliderSlides = document.getElementsByClassName('slider-slides');
 let slides = document.getElementsByClassName('hair-style'); // slides[5] - maximum
 let slideIndex = 0;
 let prev = document.querySelector('.hair .prev');
 let next = document.querySelector('.hair .next');
+let personHair = document.getElementById('person-hair');
 
-
-//Собрать массив по классам hair-woman, hair-man? И переключать слайдер при их нажатии?
+//Для отображения нужного слайда по полу
+man.addEventListener('click', function () {
+    let clickEvent = new Event('click');
+    next.dispatchEvent(clickEvent);
+});
+woman.addEventListener('click', function () {
+    let clickEvent = new Event('click');
+    next.dispatchEvent(clickEvent);
+});
 
 
 next.addEventListener('click', function () {
@@ -65,6 +60,7 @@ next.addEventListener('click', function () {
         slideIndex = 0;
     }
 
+    // Для исключения слайдов, не подходящих по полу
     let clickEvent = new Event('click');
     if (man.checked && slides[slideIndex].classList.contains('hair-woman')) {
         next.dispatchEvent(clickEvent);
@@ -74,6 +70,10 @@ next.addEventListener('click', function () {
     }
 
     slides[slideIndex].style.display = 'block';
+
+    // Изменяем URL на картинку из "construct"
+    let hairUrl = getComputedStyle(slides[slideIndex]).backgroundImage.replace("slide", "construct");
+    personHair.style.backgroundImage = hairUrl;
 
 });
 
@@ -88,6 +88,7 @@ prev.addEventListener('click', function () {
         slideIndex = (slides.length - 1);
     }
 
+    // Для исключения слайдов, не подходящих по полу
     let clickEvent = new Event('click');
     if (man.checked && slides[slideIndex].classList.contains('hair-woman')) {
         prev.dispatchEvent(clickEvent);
@@ -97,6 +98,10 @@ prev.addEventListener('click', function () {
     }
 
     slides[slideIndex].style.display = 'block';
+
+    // Изменяем URL на картинку из "construct"
+    let hairUrl = getComputedStyle(slides[slideIndex]).backgroundImage.replace("slide", "construct");
+    personHair.style.backgroundImage = hairUrl;
 });
 
 

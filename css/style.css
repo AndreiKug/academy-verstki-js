@@ -426,6 +426,7 @@
   display: none;
   width: 370px;
   height: 600px;
+  position: relative;
 }
 
 .custom-char .person {
@@ -437,11 +438,12 @@
 .custom-char .person-skin {
   position: absolute;
   margin-top: 30px;
+  top: 0;
   left: 50%;
   transform: translate(-50%);
   width: 180px;
   height: 450px;
-  background: url("../img/skin/skin-1.png") center no-repeat;
+  background: url("../img/skin/man-skin-1.png") center no-repeat;
   background-size: cover;
 }
 
@@ -463,8 +465,14 @@
   transform: translate(-50%);
   width: 180px;
   height: 450px;
-  background: url("../img/hair/construct/hair-1.png") center no-repeat;
+  /*width: 75px;*/
+  /*height: 50px;*/
+   /*background: url("../img/hair/construct/hair-1.png") center no-repeat;*/
+  background-image: url("../img/hair/construct/hair-1.png");
+  background-position: center;
+  background-repeat: no-repeat;
   background-size: cover;
+  /*background-size: auto;*/
 }
 
 .custom-char .person-shoes {
