@@ -57,6 +57,44 @@ let sliderIndexSkin = 0;
 let prevSkin = document.querySelector('.skin .prev');
 let nextSkin = document.querySelector('.skin .next');
 
+// Для исключения переключения слайдов по клику на радиобаттон
+let manFlag = true;
+let womanFlag = false;
+
+function clickEventPersona(replaceable, replacement) {
+    //Проверка на радиобатон выполняется в слайдере. Поэтому выполняем событие клик для отображения нужных слайдов по полу
+    let clickEvent = new Event('click');
+    next.dispatchEvent(clickEvent);
+    nextClothes.dispatchEvent(clickEvent);
+
+    if (man.checked) {
+        replaceable = "woman";
+        replacement = "man";
+
+    }
+    if (woman.checked) {
+        replaceable = "man";
+        replacement = "woman";
+
+    }
+
+    mainPersonSkin.style.backgroundImage = personSkinUrl.replace(replaceable, replacement);
+}
+
+man.addEventListener('click', function () {
+    if (manFlag === false) {
+        clickEventPersona();
+        manFlag = true;
+        womanFlag = false;
+    }
+});
+woman.addEventListener('click', function () {
+    if (womanFlag === false) {
+        clickEventPersona();
+        womanFlag = true;
+        manFlag = false;
+    }
+});
 
 
 //Slider Clothes
@@ -108,27 +146,6 @@ prevClothes.addEventListener('click', function () {
 
     let clothesUrl = getComputedStyle(slidesClothes[slideIndexClothes]).backgroundImage.replace("slide", "construct");
     personClothes.style.backgroundImage = clothesUrl;
-});
-
-
-
-//RadioButtons. Для отображения нужного слайда по полу
-man.addEventListener('click', function () {
-    //Проверка на радиобатон выполняется в слайдере. Поэтому выполняем событие клик.
-    let clickEvent = new Event('click');
-    next.dispatchEvent(clickEvent);
-    nextClothes.dispatchEvent(clickEvent);
-    //Замена скина персоны
-    mainPersonSkin.style.backgroundImage = personSkinUrl.replace("woman", "man");
-
-});
-woman.addEventListener('click', function () {
-    //Проверка на радиобатон выполняется в слайдере. Поэтому выполняем событие клик.
-    let clickEvent = new Event('click');
-    next.dispatchEvent(clickEvent);
-    nextClothes.dispatchEvent(clickEvent);
-    //Замена скина персоны
-    mainPersonSkin.style.backgroundImage = personSkinUrl.replace("man", "woman");
 });
 
 
@@ -211,11 +228,9 @@ nextSkin.addEventListener('click', function () {
     //Если выбран пол женский/мужской, то заменить man/woman на man/woman
     if (man.checked && (lastItemSkinUrlArr.search('woman') === 0)) {
         lastItemSkinUrlArr = lastItemSkinUrlArr.replace('woman', 'man');
-        console.log(lastItemSkinUrlArr);
     }
     if (woman.checked && (lastItemSkinUrlArr.search('man') === 0)) {
         lastItemSkinUrlArr = lastItemSkinUrlArr.replace('man', 'woman');
-        console.log(lastItemSkinUrlArr);
     }
 
 
