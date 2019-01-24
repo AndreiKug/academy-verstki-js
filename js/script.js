@@ -51,6 +51,13 @@ let prevClothes = document.querySelector('.clothes .prev');
 let nextClothes = document.querySelector('.clothes .next');
 let personClothes = document.getElementById('person-clothes');
 
+//Skin Color Slider
+let slidesSkin = document.getElementsByClassName('skin-color');
+let sliderIndexSkin = 0;
+let prevSkin = document.querySelector('.skin .prev');
+let nextSkin = document.querySelector('.skin .next');
+
+
 
 //Slider Clothes
 nextClothes.addEventListener('click', function () {
@@ -60,7 +67,7 @@ nextClothes.addEventListener('click', function () {
         slidesClothes[i].style.display = 'none';
     }
 
-    if (slideIndexClothes === slidesClothes.length) { //slides.length = 6 // slides[5] - maximum
+    if (slideIndexClothes === slidesClothes.length) {
         slideIndexClothes = 0;
     }
 
@@ -85,7 +92,7 @@ prevClothes.addEventListener('click', function () {
         slidesClothes[i].style.display = 'none';
     }
 
-    if (slideIndexClothes < 0) { //slides.length = 6 // slides[5] - maximum
+    if (slideIndexClothes < 0) {
         slideIndexClothes = (slidesClothes -1);
     }
 
@@ -113,6 +120,7 @@ man.addEventListener('click', function () {
     nextClothes.dispatchEvent(clickEvent);
     //Замена скина персоны
     mainPersonSkin.style.backgroundImage = personSkinUrl.replace("woman", "man");
+
 });
 woman.addEventListener('click', function () {
     //Проверка на радиобатон выполняется в слайдере. Поэтому выполняем событие клик.
@@ -124,7 +132,7 @@ woman.addEventListener('click', function () {
 });
 
 
-
+// Slider Hair
 next.addEventListener('click', function () {
     slideIndex++;
 
@@ -180,6 +188,75 @@ prev.addEventListener('click', function () {
     personHair.style.backgroundImage = hairUrl;
 });
 
+//Slider Skin Color
+
+nextSkin.addEventListener('click', function () {
+   sliderIndexSkin++;
+
+    for (let i = 0; i < slidesSkin.length ; i++) {
+        slidesSkin[i].style.display = 'none';
+    }
+
+    if (sliderIndexSkin === slidesSkin.length) {
+        sliderIndexSkin = 0;
+    }
+
+    slidesSkin[sliderIndexSkin].style.display = 'block';
+
+    //Замена src картинок Skin на PersonSkin
+    let skinUrlArr = personSkinUrl.split('/');
+    let skinCountChange = sliderIndexSkin + 1;
+    let lastItemSkinUrlArr = skinUrlArr[skinUrlArr.length - 1].replace(/\d/, skinCountChange);
+
+    //Если выбран пол женский/мужской, то заменить man/woman на man/woman
+    if (man.checked && (lastItemSkinUrlArr.search('woman') === 0)) {
+        lastItemSkinUrlArr = lastItemSkinUrlArr.replace('woman', 'man');
+        console.log(lastItemSkinUrlArr);
+    }
+    if (woman.checked && (lastItemSkinUrlArr.search('man') === 0)) {
+        lastItemSkinUrlArr = lastItemSkinUrlArr.replace('man', 'woman');
+        console.log(lastItemSkinUrlArr);
+    }
+
+
+    skinUrlArr.splice((skinUrlArr.length - 1), 1, lastItemSkinUrlArr);
+    let skinUrlString = skinUrlArr.join('/');
+    mainPersonSkin.style.backgroundImage = skinUrlString;
+});
+
+prevSkin.addEventListener('click', function () {
+    sliderIndexSkin--;
+
+    for (let i = 0; i < slidesSkin.length ; i++) { //slidesSkin.length = 3
+        slidesSkin[i].style.display = 'none';
+    }
+
+    if (sliderIndexSkin < 0) {
+        sliderIndexSkin = slidesSkin.length - 1;
+    }
+
+    slidesSkin[sliderIndexSkin].style.display = 'block';
+
+    //Замена src картинок Skin на PersonSkin
+    let skinUrlArr = personSkinUrl.split('/');
+    let skinCountChange = sliderIndexSkin + 1;
+    let lastItemSkinUrlArr = skinUrlArr[skinUrlArr.length - 1].replace(/\d/, skinCountChange);
+
+    //Если выбран пол женский/мужской, то заменить man/woman на man/woman
+    if (man.checked && (lastItemSkinUrlArr.search('woman') === 0)) {
+        lastItemSkinUrlArr = lastItemSkinUrlArr.replace('woman', 'man');
+        console.log(lastItemSkinUrlArr);
+    }
+    if (woman.checked && (lastItemSkinUrlArr.search('man') === 0)) {
+        lastItemSkinUrlArr = lastItemSkinUrlArr.replace('man', 'woman');
+        console.log(lastItemSkinUrlArr);
+    }
+
+    //Замена src картинок Skin на PersonSkin
+    skinUrlArr.splice((skinUrlArr.length - 1), 1, lastItemSkinUrlArr);
+    let skinUrlString = skinUrlArr.join('/');
+    mainPersonSkin.style.backgroundImage = skinUrlString;
+});
 
 
 
