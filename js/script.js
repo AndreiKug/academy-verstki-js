@@ -20,6 +20,13 @@ popupBtn.addEventListener('click', function (event) {
     }
 });
 
+//СLOSE POPUP
+let closeBtn = document.querySelector('.popup .popup-close');
+
+closeBtn.addEventListener('click', function () {
+   overlay.style.display = 'none';
+});
+
 //CUSTOMIZATION OF PERSONAGE
 
 //SEX

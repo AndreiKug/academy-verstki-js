@@ -224,13 +224,40 @@
         text-align: center
         &-close
             position: absolute
-            right: 7px
-            top: -6px
+            right: 0
+            top: 4px
+            display: block
+            width: 50px
+            height: 50px
             cursor: pointer
             font-size: 40px
-            color: #000
             font-weight: 300
             opacity: .5
+            outline: none
+            border: none
+            background-color: transparent
+
+        &-close:hover
+                opacity: 1
+        &-close:after
+                position: absolute
+                left: 20px
+                top: 5px
+                content: ' '
+                height: 33px
+                width: 2px
+                background-color: #333
+                transform: rotate(45deg)
+        &-close:before
+                position: absolute
+                left: 20px
+                top: 5px
+                content: ' '
+                height: 33px
+                width: 2px
+                background-color: #333
+                transform: rotate(-45deg)
+
         &-title
             margin-top: 50px
             color: #1f8ce2
@@ -259,6 +286,8 @@
             cursor: pointer
             background-color: #f5f5f5
             background-image: linear-gradient(to right, #1f8ce2 0%, #2068df 100%)
+
+
 .custom
     width: 100%
     min-height: 670px

@@ -20,7 +20,7 @@ gulp.task('sass', function() {
     return gulp.src("./sass/**/*.sass")
         .pipe(sass())
         .pipe(concatCss("style.css"))
-        .pipe(gulp.dest("src/css"))
+        .pipe(gulp.dest("./css"))
         // .pipe(browserSync.stream());
 });
 
