@@ -35,9 +35,7 @@ let woman = document.getElementById('female');
 let personSkin = document.getElementById('person-skin');
 
 
-//SLIDER
-//Написать через this
-// Для this переименовать классы на slider-man/slider-woman?
+//SLIDERS
 
 //Hair
 let sliderSlides = document.getElementsByClassName('slider-slides');
@@ -138,7 +136,7 @@ prevClothes.addEventListener('click', function () {
     }
 
     if (slideIndexClothes < 0) {
-        slideIndexClothes = (slidesClothes -1);
+        slideIndexClothes = (slidesClothes.length -1);
     }
 
     let clickEvent = new Event('click');
@@ -212,8 +210,8 @@ prev.addEventListener('click', function () {
     personHair.style.backgroundImage = hairUrl;
 });
 
-//Slider Skin Color
 
+//Slider Skin Color
 nextSkin.addEventListener('click', function () {
    sliderIndexSkin++;
 
@@ -281,10 +279,103 @@ prevSkin.addEventListener('click', function () {
 });
 
 
+//CLOSE CUSTOMIZATION, ADD NEW PERSONA TO MAIN-PAGE
+let ready = document.getElementById('ready');
+
+let cardItem = document.querySelectorAll('.main-cards-item');
+let firstCardItem = cardItem[0];
+let lastCardItem = cardItem[cardItem.length - 1];
+let cloneFirstCardItem = firstCardItem.cloneNode(true);
+let mainCardsDiv = document.querySelector('.main-cards');
+let resultCount = document.querySelectorAll('.result .result-count');
+let progressBarCount = document.querySelectorAll('.progress .progress-bar');
+
+let name = document.getElementById('name');
+let age = document.getElementById('age');
+let select = document.getElementById('select')
+let bio = document.getElementById('bio');
+
+
+function prepareClone() {
+    cloneFirstCardItem.querySelector('.result-count').textContent = '0%';
+    cloneFirstCardItem.querySelector('.progress-bar').style.height = '0%';
+    cloneFirstCardItem.querySelector('.name').textContent = name.value; //Сделать событием на нажатие клавиш ввода?
+    cloneFirstCardItem.querySelector('.age').textContent = age.value + ' лет';
+    if (man.checked) {
+        cloneFirstCardItem.querySelector('.sex').textContent = 'Мужской';
+    } else {
+        cloneFirstCardItem.querySelector('.sex').textContent = 'Женский';
+    }
+
+    cloneFirstCardItem.querySelector('.views').textContent = select.value;
+    cloneFirstCardItem.querySelector('.bio').textContent = bio.value;
+
+}
+
+
+ready.addEventListener('click', function () {
+    custom.style.display = 'none';
+    main.style.display = 'block';
+
+    prepareClone();
+
+    //ДОБАВЛЕНИЕ НОВОЙ ПЕРСОНЫ НА ГЛАВНУЮ
+    mainCardsDiv.appendChild(cloneFirstCardItem);
+
+    for (let i = 0; i < resultCount.length; i++) {
+        resultCount[i].textContent = '0%';
+    }
+    for (let i = 0; i < progressBarCount.length; i++) {
+        progressBarCount[i].style.height = '0%'
+    }
+
+
+    //Сохранить картинку из Персоны в папку || Сделать все возможные варианты персон, сохранить в ПНГ и подставлять в зависимости от SliderIndex
+
+
+});
 
 
 
+// ПРОВЕРКИ НА NAME И AGE
+let nameError = document.getElementById('name-error');
+let ageError = document.getElementById('age-error');
 
+function nameValidation(errorTag, validTag) {
+    errorTag.style.display = 'none';
+
+    if (validTag.value.search( /\d/ ) !== -1) {
+        errorTag.style.display = 'inline';
+    }
+}
+
+function ageValidation(errorTag, validTag) {
+    errorTag.style.display = 'none';
+
+    if (validTag.value.search( /\D/ ) !== -1) {
+        errorTag.style.display = 'inline';
+    }
+}
+
+name.addEventListener('mouseout', function () {
+    nameValidation(nameError, name);
+});
+
+name.addEventListener('keypress', function () {
+   nameValidation(nameError, name);
+});
+
+age.addEventListener('mouseout', function () {
+    ageValidation(ageError, age);
+});
+
+age.addEventListener('keypress', function () {
+    ageValidation(ageError, age);
+});
+
+
+
+// Кнопка "СБРОСИТЬ РЕЗУЛЬТАТЫ"
 
 
 

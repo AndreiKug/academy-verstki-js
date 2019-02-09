@@ -71,10 +71,16 @@
 	<!-- Customization -->
 	<div class="custom">
 		<div class="custom-info">
-			<label for="name">Фамилия Имя Отчество</label>
-			<input type="text" id="name">
-			<label for="age">Возраст, лет</label>
-			<input type="text" id="age">
+            <div class="custom-name">
+                <label for="name">Фамилия Имя Отчество</label>
+                <input type="text" id="name">
+                <span id="name-error">Имя не может состоять из цифр</span>
+            </div>
+            <div class="custom-age">
+                <label for="age">Возраст, лет</label>
+                <input type="text" id="age">
+                <span id="age-error">Возраст не может состоять из букв</span>
+            </div>
 			<div class="radio">
 				<input value="Мужской" id="male" checked name="sex" type="radio">
 				<label for="sex">Мужчина</label>

@@ -453,6 +453,38 @@
   padding: 10px 20px;
 }
 
+.custom-name {
+  position: relative;
+}
+
+.custom-name #name-error {
+  display: none;
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, 0);
+  font-size: 10px;
+  color: red;
+  text-align: center;
+}
+
+.custom-age {
+  position: relative;
+}
+
+.custom-age #age-error {
+  display: none;
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, 0);
+  font-size: 10px;
+  color: red;
+  text-align: center;
+}
+
 .custom-char {
   display: none;
   width: 370px;
