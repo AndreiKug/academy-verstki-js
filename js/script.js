@@ -301,6 +301,10 @@ function prepareClone() {
     cloneFirstCardItem.querySelector('.progress-bar').style.height = '0%';
     cloneFirstCardItem.querySelector('.name').textContent = name.value; //Сделать событием на нажатие клавиш ввода?
     cloneFirstCardItem.querySelector('.age').textContent = age.value + ' лет';
+
+    cloneFirstCardItem.classList.remove('main-cards-item-active');
+    cloneFirstCardItem.classList.add('main-cards-item-clone');
+
     if (man.checked) {
         cloneFirstCardItem.querySelector('.sex').textContent = 'Мужской';
     } else {
@@ -322,6 +326,7 @@ ready.addEventListener('click', function () {
     //ДОБАВЛЕНИЕ НОВОЙ ПЕРСОНЫ НА ГЛАВНУЮ
     mainCardsDiv.appendChild(cloneFirstCardItem);
 
+    //СБРОС ПРОЦЕНТОВ ГОЛОСОВ
     for (let i = 0; i < resultCount.length; i++) {
         resultCount[i].textContent = '0%';
     }
@@ -330,7 +335,7 @@ ready.addEventListener('click', function () {
     }
 
 
-    //Сохранить картинку из Персоны в папку || Сделать все возможные варианты персон, сохранить в ПНГ и подставлять в зависимости от SliderIndex
+    //Сделать кучу div, куда подставлять в backgroundImage картинки из слайдеров в зависимости от index'ов
 
 
 });
@@ -376,7 +381,29 @@ age.addEventListener('keypress', function () {
 
 
 // Кнопка "СБРОСИТЬ РЕЗУЛЬТАТЫ"
+let resetBtn = document.getElementById('reset');
 
+resetBtn.addEventListener('click', function () {
+    //Удаление старой Персоны
+    cloneFirstCardItem.remove();
+
+    //Переход на страницу кастомизации
+    custom.style.display = 'flex';
+    main.style.display = 'none';
+
+    for (let i = 0; i < custom.children.length; i++) {
+        custom.children[i].style.display = 'block';
+    }
+
+});
+
+
+//Кнопка "ПРОВЕСТИ ЧЕСТНОЕ ГОЛОСОВАНИЕ"
+let voting = document.getElementById('voting');
+
+voting.addEventListener('click', function () {
+    
+});
 
 
 
