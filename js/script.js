@@ -287,8 +287,7 @@ let firstCardItem = cardItem[0];
 let lastCardItem = cardItem[cardItem.length - 1];
 let cloneFirstCardItem = firstCardItem.cloneNode(true);
 let mainCardsDiv = document.querySelector('.main-cards');
-let resultCount = document.querySelectorAll('.result .result-count');
-let progressBarCount = document.querySelectorAll('.progress .progress-bar');
+
 
 let name = document.getElementById('name');
 let age = document.getElementById('age');
@@ -325,6 +324,9 @@ ready.addEventListener('click', function () {
 
     //ДОБАВЛЕНИЕ НОВОЙ ПЕРСОНЫ НА ГЛАВНУЮ
     mainCardsDiv.appendChild(cloneFirstCardItem);
+
+    let resultCount = document.querySelectorAll('.result .result-count');
+    let progressBarCount = document.querySelectorAll('.progress .progress-bar');
 
     //СБРОС ПРОЦЕНТОВ ГОЛОСОВ
     for (let i = 0; i < resultCount.length; i++) {
@@ -400,9 +402,50 @@ resetBtn.addEventListener('click', function () {
 
 //Кнопка "ПРОВЕСТИ ЧЕСТНОЕ ГОЛОСОВАНИЕ"
 let voting = document.getElementById('voting');
+// let random = randomVoteCount();
+
+function randomVoteCount(previousCount) {
+    let min = 0;
+    let max = 100;
+
+    if (previousCount) {
+        max = max - previousCount;
+    }
+
+    let rand = min - 0.5 + Math.random() * (max - min + 1);
+    rand = Math.round(rand);
+    return rand;
+}
+
+
 
 voting.addEventListener('click', function () {
-    
+    let random = randomVoteCount();
+    let resultCount = document.querySelectorAll('.result .result-count');
+    let progressBarCount = document.querySelectorAll('.progress .progress-bar');
+
+    for (let i = 0; i < progressBarCount.length; i++) {
+        progressBarCount[i].style.height = '0%';
+    }
+
+    for (let i = 1; i < resultCount.length; i++) {
+        let rand = randomVoteCount(random)
+
+        resultCount[i].textContent = '0%';
+
+        resultCount[0].textContent = random + '%';
+        //Полоска-процент progress-bar
+        resultCount[0].nextElementSibling.firstElementChild.style.height = resultCount[0].innerText;
+
+        resultCount[i].textContent = rand + '%';
+        //Полоска-процент progress-bar
+        resultCount[i].nextElementSibling.firstElementChild.style.height = resultCount[i].innerText;
+
+    }
+
+//Сделать, чтобы последний кандидат получал оставшиеся голоса: значение max записывать в отдельную переменную.
+// Возможно присваивать в max=100, каждый раз при нажатии на "Сбросить результаты" и "Провести честное голосование"
+
 });
 
 
