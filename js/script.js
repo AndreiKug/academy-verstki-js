@@ -403,24 +403,43 @@ resetBtn.addEventListener('click', function () {
 //Кнопка "ПРОВЕСТИ ЧЕСТНОЕ ГОЛОСОВАНИЕ"
 let voting = document.getElementById('voting');
 // let random = randomVoteCount();
+let min = 0;
+let max = 100;
 
-function randomVoteCount(previousCount) {
-    let min = 0;
-    let max = 100;
+function randomVoteCount() {
 
-    if (previousCount) {
-        max = max - previousCount;
-    }
+    // if (previousCount) {
+    //     max = max - previousCount;
+    // }
 
     let rand = min - 0.5 + Math.random() * (max - min + 1);
+
     rand = Math.round(rand);
+    max = max - rand;
     return rand;
 }
+
+// function randomVoteCount(previousCount) {
+//
+//     if (previousCount) {
+//         max = max - previousCount;
+//     }
+//
+//     let rand = min - 0.5 + Math.random() * (max - min + 1);
+//     // let maxDecrease = 0 + rand;
+//     // max = max - maxDecrease;
+//
+//     rand = Math.round(rand);
+//     max = max - rand;
+//     return rand;
+// }
 
 
 
 voting.addEventListener('click', function () {
-    let random = randomVoteCount();
+    max = 100;
+    //let random = randomVoteCount();
+
     let resultCount = document.querySelectorAll('.result .result-count');
     let progressBarCount = document.querySelectorAll('.progress .progress-bar');
 
@@ -428,23 +447,51 @@ voting.addEventListener('click', function () {
         progressBarCount[i].style.height = '0%';
     }
 
-    for (let i = 1; i < resultCount.length; i++) {
-        let rand = randomVoteCount(random)
-
+    for (let i = 0; i < resultCount.length - 1; i++) {
+        //Сначала обнуляем все старые значения
         resultCount[i].textContent = '0%';
 
-        resultCount[0].textContent = random + '%';
-        //Полоска-процент progress-bar
-        resultCount[0].nextElementSibling.firstElementChild.style.height = resultCount[0].innerText;
+        resultCount[i].textContent = randomVoteCount() + '%';
 
-        resultCount[i].textContent = rand + '%';
-        //Полоска-процент progress-bar
+        //Прогресс бар
         resultCount[i].nextElementSibling.firstElementChild.style.height = resultCount[i].innerText;
+
+        //Последнему элементу добавляем оставшиеся голоса из max
+        resultCount[resultCount.length - 1].textContent = max + '%';
+        resultCount[resultCount.length - 1].nextElementSibling.firstElementChild.style.height = resultCount[resultCount.length - 1].innerText;
 
     }
 
+
+
+
+        // resultCount[0].textContent = random + '%';
+        // //Полоска-процент progress-bar
+        // resultCount[0].nextElementSibling.firstElementChild.style.height = resultCount[0].innerText;
+        //
+        // resultCount[i].textContent = rand + '%';
+        // //Полоска-процент progress-bar
+        // resultCount[i].nextElementSibling.firstElementChild.style.height = resultCount[i].innerText;
+
+    // for (let i = 1; i < resultCount.length; i++) {
+    //      let rand = randomVoteCount(random)
+    //     //Для каждого вызвать функцию
+    //
+    //     resultCount[i].textContent = '0%';
+    //
+    //     resultCount[0].textContent = random + '%';
+    //     //Полоска-процент progress-bar
+    //     resultCount[0].nextElementSibling.firstElementChild.style.height = resultCount[0].innerText;
+    //
+    //     resultCount[i].textContent = rand + '%';
+    //     //Полоска-процент progress-bar
+    //     resultCount[i].nextElementSibling.firstElementChild.style.height = resultCount[i].innerText;
+    //
+    // }
+
 //Сделать, чтобы последний кандидат получал оставшиеся голоса: значение max записывать в отдельную переменную.
 // Возможно присваивать в max=100, каждый раз при нажатии на "Сбросить результаты" и "Провести честное голосование"
+// Нужно приплюсовывать random
 
 });
 
