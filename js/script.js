@@ -284,7 +284,7 @@ let ready = document.getElementById('ready');
 
 let cardItem = document.querySelectorAll('.main-cards-item');
 let firstCardItem = cardItem[0];
-let lastCardItem = cardItem[cardItem.length - 1];
+// let lastCardItem = cardItem[cardItem.length - 1];
 let cloneFirstCardItem = firstCardItem.cloneNode(true);
 let mainCardsDiv = document.querySelector('.main-cards');
 
@@ -319,6 +319,10 @@ function prepareClone() {
 ready.addEventListener('click', function () {
     custom.style.display = 'none';
     main.style.display = 'block';
+
+    // for (let i = 0; i < cardItem.length; i++)  {
+    //     cardItem[i].classList.remove('main-cards-item-active');
+    // }
 
     prepareClone();
 
@@ -420,6 +424,10 @@ voting.addEventListener('click', function () {
     let resultCount = document.querySelectorAll('.result .result-count');
     let progressBarCount = document.querySelectorAll('.progress .progress-bar');
 
+    // for (let i = 0; i < cardItem.length; i++)  {
+    //     cardItem[i].classList.remove('main-cards-item-active');
+    // }
+
     for (let i = 0; i < progressBarCount.length; i++) {
         progressBarCount[i].style.height = '0%';
     }
@@ -438,6 +446,9 @@ voting.addEventListener('click', function () {
         resultCount[resultCount.length - 1].nextElementSibling.firstElementChild.style.height = resultCount[resultCount.length - 1].innerText;
 
     }
+
+    addActiveClassToCard();
+
 });
 
 
@@ -449,6 +460,10 @@ crime.addEventListener('click', function () {
 
     let resultCount = document.querySelectorAll('.result .result-count');
     let progressBarCount = document.querySelectorAll('.progress .progress-bar');
+
+    for (let i = 0; i < cardItem.length; i++)  {
+        cardItem[i].classList.remove('main-cards-item-active');
+    }
 
     for (let i = 0; i < progressBarCount.length; i++) {
         progressBarCount[i].style.height = '0%';
@@ -468,7 +483,75 @@ crime.addEventListener('click', function () {
         resultCount[resultCount.length - 1].nextElementSibling.firstElementChild.style.height = resultCount[resultCount.length - 1].innerText;
 
     }
+
+    addActiveClassToCard();
 });
 
 
+//ДОБАВЛЕНИЕ КЛАССА .main-cards-item-active победителю
+function addActiveClassToCard () {
+    let resultCount = document.querySelectorAll('.result .result-count');
+    let cardItem = document.querySelectorAll('.main-cards-item');
+    let resultArr = [];
 
+    //Удаляем все возможные active-классы
+    for (let i = 0; i < cardItem.length; i++)  {
+        cardItem[i].classList.remove('main-cards-item-active');
+    }
+
+    //Копируем массив, чтобы работать непосредственно с копией
+    for (let i = 0; i < resultCount.length; i++)  {
+        resultArr.push(resultCount[i].textContent);
+    }
+
+    //Приводим массив к строке, чтобы удалить '%'
+    let resultStr = resultArr.join(',');
+    resultStr = resultStr.replace(/%/g, '');
+    resultArr = resultStr.split(',');
+
+    //Приводим массив к числу, чтобы выполнять сравнение maxResult, как чисел, а не строк
+    for (let i = 0; i < resultArr.length; i++) {
+        resultArr[i] = Number(resultArr[i]);
+    }
+
+    //Определяем наибольшее набранное значение голосов
+    let maxResult = resultArr[0];
+    for (let i = 0; i < resultArr.length; i++) {
+        if (maxResult < resultArr[i]) {
+            maxResult = resultArr[i];
+        }
+    }
+
+    //Присваение победителю класса
+    for (let i = 0; i < resultCount.length; i++) {
+        if (maxResult + '%' === resultCount[i].textContent) {
+            resultCount[i].closest(".main-cards-item").classList.add('main-cards-item-active');
+        }
+    }
+
+};
+
+
+
+
+
+
+//ПОЛИФИЛЛ CLOSEST()
+(function() {
+
+    // проверяем поддержку
+    if (!Element.prototype.closest) {
+
+        // реализуем
+        Element.prototype.closest = function(css) {
+            var node = this;
+
+            while (node) {
+                if (node.matches(css)) return node;
+                else node = node.parentElement;
+            }
+            return null;
+        };
+    }
+
+})();
